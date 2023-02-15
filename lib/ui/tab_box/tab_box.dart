@@ -8,6 +8,7 @@ import 'package:local_notification/data/services/local_notification/local_notifi
 import 'package:local_notification/state_managers/cubit/connectivity/connectivity_cubit.dart';
 import 'package:local_notification/state_managers/cubit/get_notification/get_notification_cubit.dart';
 import 'package:local_notification/state_managers/cubit/tab_box/tab_box_cubit.dart';
+import 'package:local_notification/ui/download_page/download_screen.dart';
 import 'package:local_notification/ui/home_page/home_page.dart';
 import 'package:local_notification/ui/notifications_page/notifications_page.dart';
 import 'package:local_notification/ui/router.dart';
@@ -29,6 +30,7 @@ class _TabBoxPageState extends State<TabBoxPage> {
     _init();
     screens.add(DPage());
     screens.add(HomePage());
+    screens.add(FileDownloadExample());
     super.initState();
   }
 
@@ -113,17 +115,24 @@ class _TabBoxPageState extends State<TabBoxPage> {
                 items: const [
                   BottomNavigationBarItem(
                     icon: Icon(
-                      Icons.notifications,
+                      Icons.notification_add,
                       size: 30,
                     ),
-                    label: "D",
+                    label: "Notifications Database",
                   ),
                   BottomNavigationBarItem(
                     icon: Icon(
                       Icons.notifications_active_rounded,
                       size: 30,
                     ),
-                    label: "E",
+                    label: "Local Notification",
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      Icons.file_download,
+                      size: 30,
+                    ),
+                    label: "File Download",
                   ),
                 ],
               ),

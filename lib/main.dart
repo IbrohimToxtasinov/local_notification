@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
       initialRoute: RoutName.tabBox,
       onGenerateRoute: AppRoutes.generateRoute,
       debugShowCheckedModeBanner: false,
-      title: 'Fifth Exam',
+      title: 'Local Notification',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

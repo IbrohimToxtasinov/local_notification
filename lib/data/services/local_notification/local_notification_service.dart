@@ -7,7 +7,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 class LocalNotificationService {
   static final LocalNotificationService localNotificationService =
-  LocalNotificationService._();
+      LocalNotificationService._();
 
   factory LocalNotificationService() {
     return localNotificationService;
@@ -16,16 +16,16 @@ class LocalNotificationService {
   LocalNotificationService._();
 
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin();
+      FlutterLocalNotificationsPlugin();
 
   void init(GlobalKey<NavigatorState> navigatorKey) {
     // Android
     const AndroidInitializationSettings androidInitializationSettings =
-    AndroidInitializationSettings("img");
+        AndroidInitializationSettings("img");
 
     //IOS
     final DarwinInitializationSettings initializationSettingsDarwin =
-    DarwinInitializationSettings(
+        DarwinInitializationSettings(
       onDidReceiveLocalNotification: onDidReceiveLocalNotification,
     );
 
@@ -39,14 +39,14 @@ class LocalNotificationService {
       initializationSettings,
       // onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
       onDidReceiveNotificationResponse: (
-          NotificationResponse notificationResponse,
-          ) {
+        NotificationResponse notificationResponse,
+      ) {
         //Android
         if (notificationResponse.payload != null) {
           Navigator.push(navigatorKey.currentContext!,
               MaterialPageRoute(builder: (context) {
-                return NewPage();
-              }));
+            return NewPage();
+          }));
 
           debugPrint('PAYLOAD RESULT------> ${notificationResponse.payload}');
         } else {
@@ -57,7 +57,7 @@ class LocalNotificationService {
 
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
-        AndroidFlutterLocalNotificationsPlugin>()
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.requestPermission();
     tz.initializeTimeZones();
   }
@@ -71,17 +71,17 @@ class LocalNotificationService {
 
   //IOS
   void onDidReceiveLocalNotification(
-      int id,
-      String? title,
-      String? body,
-      String? payload,
-      ) async {
+    int id,
+    String? title,
+    String? body,
+    String? payload,
+  ) async {
     print(payload);
   }
 
   //channel
   AndroidNotificationChannel androidNotificationChannel =
-  const AndroidNotificationChannel(
+      const AndroidNotificationChannel(
     "my_channel",
     "Notification Lesson ",
     importance: Importance.max,
@@ -90,11 +90,12 @@ class LocalNotificationService {
 
   void showNotification({
     required int id,
+    required String title,
   }) {
     flutterLocalNotificationsPlugin.show(
       id,
-      "Ibrohim",
-      "Bugun darsga borolmayman ID:$id",
+      title,
+      "",
       NotificationDetails(
         android: AndroidNotificationDetails(
           androidNotificationChannel.id,
@@ -126,7 +127,7 @@ class LocalNotificationService {
       payload: "SCHEADULED NOTIFICATION PAYLOAD DATA ID:$id",
       androidAllowWhileIdle: true,
       uiLocalNotificationDateInterpretation:
-      UILocalNotificationDateInterpretation.absoluteTime,
+          UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
 

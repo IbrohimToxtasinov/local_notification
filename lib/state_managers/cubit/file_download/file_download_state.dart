@@ -1,31 +1,12 @@
-import 'package:equatable/equatable.dart';
+part of 'file_download_cubit.dart';
 
-class FileManagerState extends Equatable {
-  FileManagerState({
-    required this.stop,
-    required this.progress,
-    required this.newFileLocation,
-  });
+@immutable
+abstract class FileDownloadState {}
 
-  final double progress;
-  final bool stop;
-  final String newFileLocation;
+class FileDownloadInitial extends FileDownloadState {}
 
-  FileManagerState copyWith({
-    double? progress,
-    bool? stop,
-    String? newFileLocation,
-  }) =>
-      FileManagerState(
-        stop: stop ?? this.stop,
-        progress: progress ?? this.progress,
-        newFileLocation: newFileLocation ?? this.newFileLocation,
-      );
-
-  @override
-  List<Object?> get props => [
-        progress,
-        newFileLocation,
-        stop,
-      ];
+class FileDownloadInProgressState extends FileDownloadState{
+  num progress;
+  FileDownloadInProgressState({required this.progress});
 }
+class FileDownloadInSuccessState extends FileDownloadState{}

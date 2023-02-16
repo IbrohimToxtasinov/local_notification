@@ -23,7 +23,7 @@ class _FileDownloadExampleState extends State<FileDownloadExample> {
       body: ListView(
         children: List.generate(filesData.length, (index) {
           var singleFile = filesData[index];
-          return SingleFileDownload(fileInfo: singleFile);
+          return SingleFileDownload(file: singleFile);
         }),
       ),
     );

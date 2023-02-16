@@ -1,62 +1,89 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_notification/data/models/file_info/file_info.dart';
 import 'package:local_notification/state_managers/cubit/file_download/file_download_cubit.dart';
-import 'package:local_notification/state_managers/cubit/file_download/file_download_state.dart';
 import 'package:local_notification/utils/my_utils.dart';
-import 'package:open_file_safe/open_file_safe.dart';
+import 'package:open_filex/open_filex.dart';
 
-import '../../../data/services/local_notification/local_notification_service.dart';
+class SingleFileDownload extends StatefulWidget {
+  final FileInfo file;
 
-class SingleFileDownload extends StatelessWidget {
-  SingleFileDownload({Key? key, required this.fileInfo}) : super(key: key);
+  const SingleFileDownload({required this.file, Key? key}) : super(key: key);
 
-  final FileInfo fileInfo;
-  FileManagerCubit fileManagerCubit = FileManagerCubit();
+  @override
+  State<SingleFileDownload> createState() => _SingleFileDownloadState();
+}
+
+class _SingleFileDownloadState extends State<SingleFileDownload> {
+  double done = 0;
+  bool isDownloaded = false;
+
+  checkStatus() async {
+    isDownloaded =
+        await File("/storage/emulated/0/Download/${widget.file.fileName}")
+            .exists();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    checkStatus();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: fileManagerCubit,
-      child: BlocBuilder<FileManagerCubit, FileManagerState>(
-        builder: (context, state) {
-          return ListTile(
-            leading: state.newFileLocation.isEmpty
-                ? IconButton(
-                onPressed: () {
-                  if(state.progress == 0.0 ) {
-                    context
-                        .read<FileManagerCubit>()
-                        .downloadIfExists(fileInfo: fileInfo);
-                  }else if(state.progress > 0.0) {
-                    context
-                        .read<FileManagerCubit>()
-                        .stopped(stopped: false);
+    return BlocProvider(
+      create: (context) => FileDownloadCubit(),
+      child: BlocConsumer<FileDownloadCubit, FileDownloadState>(
+        listener: (context, state) {
+          if (state is FileDownloadInSuccessState) {
+            checkStatus();
+          }
+        },
+        builder: (context, state) => Container(
+          margin: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(8)),
+          child: ListTile(
+              title: Text(widget.file.fileName),
+              subtitle: LinearProgressIndicator(
+                value: isDownloaded
+                    ? 100
+                    : state is FileDownloadInProgressState
+                        ? state.progress.toDouble()
+                        : 0,
+                backgroundColor: Colors.grey,
+              ),
+              trailing: IconButton(
+                icon: const Icon(Icons.file_open),
+                onPressed: () async {
+                  bool isExist = await File(
+                          "/storage/emulated/0/Download/${widget.file.fileName}")
+                      .exists();
+                  if (isExist) {
+                    OpenFilex.open(
+                        "/storage/emulated/0/Download/${widget.file.fileName}");
+                  } else {
+                    MyUtils.getMyToast(
+                        message: "Fileni ochish uchun yuklab oling");
                   }
                 },
-                icon: const Icon(Icons.download, color: Colors.white,))
-                : const Icon(Icons.download_done,color: Colors.white),
-            title: Text("${fileInfo.fileName}: ${state.progress * 100}%", style: TextStyle(color: Colors.white,),),
-            subtitle: LinearProgressIndicator(
-              value: state.progress,
-              backgroundColor: Colors.white,
-            ),
-            trailing: IconButton(
-              onPressed: () {
-                if (state.newFileLocation.isNotEmpty) {
-                  OpenFile.open(state.newFileLocation);
-                }else if(state.progress < 100){
+              ),
+              leading: IconButton(
+                onPressed: () {
                   context
-                      .read<FileManagerCubit>()
-                      .downloadIfExists(fileInfo: fileInfo);
-                  LocalNotificationService.localNotificationService
-                      .showNotification(id: 5);
-                }
-              },
-              icon: const Icon(Icons.file_open, color: Colors.white),
-            ),
-          );
-        },
+                      .read<FileDownloadCubit>()
+                      .downloadFile(file: widget.file);
+                },
+                icon: isDownloaded
+                    ? const Icon(
+                        Icons.done,
+                      )
+                    : const Icon(Icons.download),
+              )),
+        ),
       ),
     );
   }

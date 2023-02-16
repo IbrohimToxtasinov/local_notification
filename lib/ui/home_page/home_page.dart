@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 currentId++;
                 LocalNotificationService.localNotificationService
-                    .showNotification(id: currentId);
+                    .showNotification(id: currentId, title: "Salom Sizga Nnotification keldi");
               },
               child: Text("SIMPLE Notifiction 1"),
             ),
@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 currentId++;
                 LocalNotificationService.localNotificationService
-                    .showNotification(id: currentId);
+                    .showNotification(id: currentId, title: "Salom Sizga Nnotification keldi");
               },
               child: Text("SIMPLE Notifiction 2"),
             ),

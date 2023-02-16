@@ -27,15 +27,15 @@ class _HomePageState extends State<HomePage> {
                 LocalNotificationService.localNotificationService
                     .showNotification(id: currentId, title: "Salom Sizga Nnotification keldi");
               },
-              child: Text("SIMPLE Notifiction 1"),
+              child: const Text("SIMPLE Notifiction 1"),
             ),
             TextButton(
               onPressed: () {
                 currentId++;
                 LocalNotificationService.localNotificationService
-                    .showNotification(id: currentId, title: "Salom Sizga Nnotification keldi");
+                    .showNotification(id: currentId, title: "Salom Sizga Notification keldi");
               },
-              child: Text("SIMPLE Notifiction 2"),
+              child: const Text("SIMPLE Notifiction 2"),
             ),
             TextButton(
               onPressed: () {
@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                   delayedTime: 3,
                 );
               },
-              child: Text("SCHUADULED NOTIFICATION "),
+              child: const Text("SCHUADULED NOTIFICATION "),
             ),
             TextButton(
               onPressed: () {
@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 LocalNotificationService.localNotificationService
                     .showPeriodically(id: currentId);
               },
-              child: Text("PERIODIC NOTIFICATION EVERY MINUT"),
+              child: const Text("PERIODIC NOTIFICATION EVERY MINUT"),
             ),
             const Expanded(child: SizedBox()),
             TextButton(

@@ -17,7 +17,6 @@ class DPage extends StatelessWidget {
 
           IconButton(
             onPressed: () async {
-              String messageId =
               await NotificationApiService.sendNotificationToAll();
             },
             icon: const Icon(Icons.send_and_archive),

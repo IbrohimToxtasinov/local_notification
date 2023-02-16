@@ -28,9 +28,9 @@ class _TabBoxPageState extends State<TabBoxPage> {
   @override
   void initState() {
     _init();
-    screens.add(DPage());
-    screens.add(HomePage());
-    screens.add(FileDownloadExample());
+    screens.add(const DPage());
+    screens.add(const HomePage());
+    screens.add(const FileDownloadExample());
     super.initState();
   }
 
@@ -65,7 +65,7 @@ class _TabBoxPageState extends State<TabBoxPage> {
         image: message.data['image'],
       );
       Navigator.pushNamed(context, routeName, arguments: notification);
-      print("ON MESSAGE OPPENED APPDA QOSHILDI");
+      debugPrint("ON MESSAGE OPPENED APPDA QOSHILDI");
     });
   }
 

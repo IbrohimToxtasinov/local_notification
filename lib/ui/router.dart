@@ -20,22 +20,14 @@ class AppRoutes {
               NoInternetScreen(voidCallback: settings.arguments as VoidCallback),
         );
       case RoutName.tabBox:
-        return MaterialPageRoute(builder: (_) => TabBoxPage());
+        return MaterialPageRoute(builder: (_) => const TabBoxPage());
       case RoutName.notification:
-        return MaterialPageRoute(builder: (_) => DPage());
+        return MaterialPageRoute(builder: (_) => const DPage());
 
       case RoutName.newsDetailRoute:
-        return MaterialPageRoute(builder: (_) => NewPage());
-    // case RoutName.productInfo:
-    //   final args = settings.arguments as Map<String, dynamic>;
-    //   return MaterialPageRoute(
-    //     builder: (_) => ProductInfoPage(
-    //       productInfo: args['productInfo'],
-    //     ),
-    //   );
-
+        return MaterialPageRoute(builder: (_) => const NewPage());
       default:
-        return MaterialPageRoute(builder: (_) => Scaffold());
+        return MaterialPageRoute(builder: (_) => const Scaffold());
     }
   }
 }
